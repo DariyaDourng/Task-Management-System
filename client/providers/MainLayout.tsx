@@ -1,3 +1,4 @@
+'use client';
 import React from 'react'
 interface MainLayoutProps  {
     children: React.ReactNode;
@@ -6,8 +7,8 @@ interface MainLayoutProps  {
 function MainLayout({children}: MainLayoutProps) {
 
   return (
-    <div>
-      MainLayout
+    <div className='main-layout flex-1 bg-[#EDEDED] border-2 border-white rounded-[1.5rem] overflow-auto  '>
+  
       {children}
     </div>
   )
