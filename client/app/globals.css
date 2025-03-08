@@ -34,7 +34,9 @@ form > img {
   object-fit: cover;
 } */
 
-
+.main-layout::-webkit-scrollbar{
+  width: 0.5rem;
+}
 .u-triangle::before{
   content: '';
   position: absolute;
