@@ -14,13 +14,14 @@ function Profile() {
         hover:bg-[#E6E6E6]/50 transition duration-300 ease-in-out cursor-pointer border-2 border-transparent hover:border-2 hover:border-white"
  
       >
-        <div>
+        <div className="overflow-hidden">
           <Image
             src={user?.photo}
             alt="avatar"
             width={70}
             height={70}
-            className="rounded-full"
+            
+            className="rounded-full object-cover w-[70px] h-[70px]"
           />
         </div>
         <div>
