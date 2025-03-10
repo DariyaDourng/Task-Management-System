@@ -1,6 +1,7 @@
 
 import React, {createContext, useContext, useEffect} from 'react';
 import { useUserContext } from './userContext';
+import axios from "axios";
 
 const TaskContext = createContext();
 
@@ -20,7 +21,7 @@ const getTasks = async () => {
     setLoading(true);
     try{
         const response = await axios.get(`${serverUrl}/tasks`);
-        const data = await response.json();
+        // const data = await response.json();
         setTasks(response.data);
     }catch (error){
         console.log("Error getting tasks", error);
@@ -32,10 +33,10 @@ const getTasks = async () => {
 const  getTask = async (taskId) => {
     setLoading(true);
     try{
-        const response = await axios.get(`${serverUrl}/tasks/${id}`);
-        const data = await response.json();
+         const response = await axios.get(`${serverUrl}/task/${taskId}`);
+
         setTask(response.data);
-    }catch (error){
+      } catch (error) {
         console.log("Error getting task", error);
     }
     setLoading(false);
@@ -93,7 +94,13 @@ useEffect(() => {
 
 
     return (
-        <TaskContext.Provider value={{tasks, loading, createTask, updateTask, deleteTask
+        <TaskContext.Provider value={{
+            tasks,
+            task,
+            loading,
+            createTask,
+            updateTask,
+             deleteTask
         ,priority, setPriority}}>
             {children}
         </TaskContext.Provider>
@@ -104,3 +111,4 @@ useEffect(() => {
 export const useTasks = () => {
     return useContext(TaskContext);
 };
+
