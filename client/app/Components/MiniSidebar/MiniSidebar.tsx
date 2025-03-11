@@ -42,7 +42,7 @@ function MiniSidebar() {
   return (
     <div className='basis-[5rem] flex flex-col bg-[#f9f9f9]'>
       <div className='flex items-center justify-center h-[5rem] '>
-    <img src="/logo.png" alt="logo" width={28} height={28} />
+    {/* <img src="/logo.png" alt="logo" width={28} height={28} /> */}
       </div>
     <div className='mt-8 flex-1 flex flex-col items-center justify-between'>
       <ul className='flex flex-col gap-10'>{navItems.map((item, index)=>(
