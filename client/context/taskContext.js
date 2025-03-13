@@ -3,6 +3,7 @@ import React, {createContext, useContext, useEffect} from 'react';
 import { useUserContext } from './userContext';
 import axios from "axios";
 import { toast } from 'react-toastify';
+import { setEngine } from 'crypto';
 
 
 const TaskContext = createContext();
@@ -13,9 +14,11 @@ export const TasksProvider = ({children}) => {
 
 const userId = useUserContext().user._id;
 
-const [tasks, setTasks] = React.useState([]);  
+const [isEditing, setIsEditing] = React.useState(false);
+const [tasks, setTasks] = React.useState([]);
 const [loading, setLoading] = React.useState(false);
 const  [task, setTask] = React.useState({
+
     title: "",           // Initialize with an empty string
     description: "",     // Initialize with an empty string
     priority: "low",     // Default to "low"
@@ -23,16 +26,61 @@ const  [task, setTask] = React.useState({
     completed: false     // Default completed state is false
 });
 
+// });
 const [priority, setPriority] = React.useState('all');
+const [activeTask, setActiveTask] = React.useState(null);
+const [modalMode, setModalMode] = React.useState('');
+const [profileModal, setProfileModal] = React.useState(false);
+
+const openModalForAdd = () => {
+    setModalMode("add");
+    setIsEditing(true);
+    setTask({});
+    
+};
+
+const openModalForEdit = (task) => {
+    setModalMode("edit");
+    setIsEditing(true);
+    setTask(task);
+    // setTask({});
+    setActiveTask(task);
+};
+
+const openProfileModal = () => {
+    setProfileModal(true);
+};
+
+const closeModal = () => {
+    setIsEditing(false);
+    setProfileModal(false);
+    setModalMode(' ');
+    setActiveTask(null);
+    setTask({});
+
+
+}
 
 
 // get tasks
 const getTasks = async () => {
     setLoading(true);
     try {
+    
+        // const token = localStorage.getItem("authToken"); // Or get it from your auth state/context
+        // if (!token) throw new Error("No authentication token found");
+    
+        // const response = await axios.get(`${serverUrl/tasks}`, {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`, // Include token
+        //   },
+        // });
+    
+        // setTasks(response.data.tasks || []); 
       const response = await axios.get(`${serverUrl}/tasks`);
 
       setTasks(response.data);
+    //   console.log(response.data)
    
     } catch (error) {
       console.log("Error getting tasks", error);
@@ -47,7 +95,7 @@ const getTask = async (taskId) => {
     try{
         const response = await axios.get(`${serverUrl}/task/${taskId}`)
 
-        setTask(response.data);
+        setTask(response.data.tasks);
     
     }catch(error){
         console.log("Error getting task", error);
@@ -117,7 +165,6 @@ const deleteTask = async (taskId) =>{
 useEffect(() => {
     getTasks();
 
-
 }, [userId]);
     
 
@@ -134,7 +181,20 @@ useEffect(() => {
             deleteTask,
             priority,
             setPriority,
-            handleInput,}}>
+            handleInput,
+            isEditing,
+            setIsEditing,
+            openModalForAdd,
+            activeTask,
+            setActiveTask,
+            openModalForEdit,
+            setModalMode,
+            setProfileModal,
+            openProfileModal,
+            closeModal
+
+            
+            }}>
             {children}
         </TaskContext.Provider>
         

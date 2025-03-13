@@ -3,7 +3,7 @@ interface Task{
     title: string;
     description: string;
     status: string;
-    // dueDate: string;
+    dueDate: string;
     completed: boolean;
     priority: string;
     createdAt: string;

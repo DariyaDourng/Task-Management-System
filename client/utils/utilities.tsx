@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-export const formatDate = (createdAt: string) => {
+export const formatTime = (createdAt: string) => {
     const now = moment();
     const created = moment(createdAt);
 
@@ -9,7 +9,6 @@ export const formatDate = (createdAt: string) => {
     if(created.isSame(now, 'day')){
         return "Today";
 
-        //if the task was created yesterday
     }
     //if the task was created yesterday 
     if(created.isSame(now.subtract(1, 'days'), 'day')){
